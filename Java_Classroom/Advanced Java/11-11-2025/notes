@@ -1,0 +1,106 @@
+adv java-50 days
+
+jdbc-overcome drawback from jdbc-platform independent
+odbc drawback only supported in windows - platform dependent
+
+
+diff b/n odbc and jdbc
+1.defn
+2.microsoft,sun micro systems
+3. used for langs like c,c++,java,etc           used for java only
+4.most odbc drivers are developed in c and c++           in java
+5.odbc can be used for java but low performance
+
+
+drivers
+Type 1: JDBC ODBC bridge driver or bridge driver
+-java appl <--> JDBC ODBC bridge driver <--> odbc <--> database
+-only supports until 1.7 version
+-not recommended
+Type 2:
+Type 3:
+Type 4: we currently use this - purely dev by java
+
+thin driver - no extra comp req to communicate with DB eg.Type 4 driver
+thick driver - extra comp like ODBC driver or vendor specific native libraries or middleware server is req.  eg. Type 1,2,3 drivers
+
+steps to prepare jdbc appln
+-----------------------------
+------------------------------
+
+-4 jdbc comps. : translator/driver, connection, stmt obj, result set
+
+1. load and register the driver
+2. connection establishment b/n java specific calls to db specific calls
+3. create stmt object 
+4. prepare, send and execute sql query to the data
+5. process result from result set
+6. close the connection
+
+
+1. load and register the driver
+--------------------------------
+-optional
+-the forName() method of a class is used to register the driver class. This method is used to dynamically load the driver class.
+
+syntax for forName() method
+----------------------------
+public static void forName()(String ClassName) throws ClassNotFoundException.
+class.forName("com.msql.cj.jdbc.Driver");
+
+2. connection establishment b/n java specific calls to db specific calls
+==========================================================================
+the getConnection() method of a DriverManager class is used to establish connection with db.
+
+syntax
+--------
+public static connection getConnection(String url, String username, String password);
+url="jdbc:mysql>//localhost:3306/database-name";
+username="root";
+password="root";
+
+eg: Connection con=DriverManager.getConnection(url,usernme,password);
+
+
+3. create stmt object 
+========================
+
+public Statement createStatement();
+eg: Statement st=con.createStstement();
+
+4. prepare, send and execute sql query to the data
+===================================================
+
+String sqlQuery=st.executeUpdate("use non-select opetaions"); --> return type is always int
+String sqlQuery=st.executeQuery("for select opetaions"); --> return type is ResultSet;
+String sqlQuery=st.execute("both select and non-select opetaions"); --> return type is Boolean
+if true --> for selectQuery
+if false --> non-selectQuery
+
+
+
+5. process result from result set
+=======================================
+-only used for select operations (retrievable operations) 
+-2 ways: index and column wise
+eg: eno,ename,esal,eaddr
+while(rs.next()({
+System.out.println(rs.getInt(1)+"----"+rs.getString(2)+"----"+rs.getDouble(3)+"----"+rs.getString(4));
+
+System.out.println(rs.getInt(eno)+"----"+rs.getString(ename)+"----"+rs.getDouble(esal)+"----"+rs.getString(eaddr));
+}
+
+
+6. close the connection
+========================
+con.close();
+
+----------------------------------------------------------------------------------------------------------------------------------------
+mysql connector jar download(search in browser) --> maven repository --> search MySQL in serach tab --> MySQL Connector/J --> 9.1.0 --> jar(2.5 MB)
+
+eclipse --> new java project --> jdbcprograms->right click on project -->  build path --> configure build path --> libraries --> click on class path--> add external jars --> add MySQL 9.1.0 in softwares folder --> apply --> apply and close
+
+src --> new class --> com.codegnan.jdbcprograms --> CreateTable
+
+
+
