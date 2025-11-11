@@ -38,12 +38,11 @@ public class CreateTable {
 		} finally {
 			if(con!=null) {
 				try {
-					con.close();				
-			} catch(Exception e) {
-				e.printStackTrace();
+					con.close();
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
 			}
-		}
-	    }
-		
+		}		
 	}
 }
